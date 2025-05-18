@@ -9,7 +9,7 @@
       :key="index"
       data-aos="fade-up"
       data-aos-anchor-placement="center-bottom"
-      :data-aos-delay="index * 100"
+      :data-aos-delay="index * 50"
     >
       <Icon :icon="tech.icon" width="40" height="40" />
       <span class="text-gray-200">{{ tech.name }}</span>
