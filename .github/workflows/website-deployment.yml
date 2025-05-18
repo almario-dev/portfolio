@@ -1,0 +1,60 @@
+name: Build & Deploy Vue SPA
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build Vue App
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: vue-dist
+          path: dist
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    name: Deploy
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: vue-dist
+          path: dist
+
+      - name: Install sshpass
+        run: sudo apt-get update && sudo apt-get install -y sshpass
+
+      - name: Deploy using sshpass
+        env:
+          SSH_PASSWORD: ${{ secrets.HOSTINGER_PASS }}
+          SSH_USER: ${{ secrets.HOSTINGER_USER }}
+          SSH_HOST: ${{ secrets.HOSTINGER_HOST }}
+          SSH_PORT: ${{ secrets.HOSTINGER_PORT }}
+          SSH_TARGET_DIR: ${{ secrets.TARGET_DIR }}
+          EXCLUDE_DIR: ${{ secrets.EXCLUDE_FOLDER }}
+        run: |
+          sshpass -p "$SSH_PASSWORD" rsync -avz --delete \
+          --exclude='.htaccess' \
+          --exclude='$EXCLUDE_DIR' \
+          -e "ssh -p $SSH_PORT -o StrictHostKeyChecking=no" \
+          dist/ $SSH_USER@$SSH_HOST:$SSH_TARGET_DIR
