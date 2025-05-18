@@ -1,33 +1,32 @@
 <template>
   <IndexHeader />
 
-  <section class="relative h-screen">
+  <section class="relative md:h-screen">
     <div
-      class="md:absolute md:top-2/6 md:-translate-y-1/2 right-1/2 mx-auto md:right-16 w-[60vw] md:w-[28vw] aspect-square shadow-2xl shadow-prussian-blue bg-[url('@/assets/images/almario-no-bg.png')] bg-contain bg-no-repeat z-10 border-2 opacity-90 border-aqua/50 rounded-full"
-      data-aos="zoom-in"
+      class="md:absolute md:top-2/6 md:-translate-y-1/2 right-1/2 mt-8 md:mt-0 mx-auto md:right-16 w-[40vw] md:w-[28vw] aspect-square shadow-2xl shadow-prussian-blue bg-[url('@/assets/images/almario-no-bg.png')] bg-contain bg-no-repeat z-10 border-2 opacity-90 border-aqua/50 rounded-full"
+      data-aos="fade-left"
+      :data-aos-delay="500"
     ></div>
-    <div
-      class="text-center md:text-left py-16 px-4 sm:py-24 sm:px-6 lg:px-8 bg-rich-blackxxx h-full w-full"
-    >
+    <div class="text-center md:text-left py-16 px-4 sm:py-24 sm:px-6 lg:px-8 h-full w-full">
       <div class="max-w-2xl">
-        <div>
-          <h1
-            class="text-4xl md:text-6xl font-extrabold leading-tight mb-3"
-            ref="greetingsRef"
-          ></h1>
-        </div>
-        <!-- <h2 class="text-xl sm:text-3xl font-bold leading-tight inline-block">
-          Full Stack Developer
-        </h2> -->
+        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-3" ref="greetingsRef"></h1>
 
         <div class="flex justify-center md:justify-start items-center gap-6 flex-wrap my-10">
-          <Icon icon="logos:laravel" width="40" height="40" />
-          <Icon icon="logos:vue" width="40" height="40" />
-          <Icon icon="vscode-icons:file-type-quasar" width="40" height="40" />
+          <span
+            v-for="(tech, i) in FeaturedTechnologies"
+            :key="i"
+            data-aos="zoom-in"
+            :data-aos-delay="1000 + i * 100"
+            :title="tech.name"
+          >
+            <Icon :icon="tech.icon" width="40" height="40" />
+          </span>
         </div>
 
         <p
           class="text-gray-400 max-w-full px-6 md:px-0 sm:max-w-4/5 text-lg sm:text-2xl mb-12 sm:mb-16 my-16"
+          data-aos="zoom-in"
+          :data-aos-delay="500"
         >
           Turning ideas into sleek, scalable applications using Laravel, Vue, and Quasar — crafted
           for real-world impact and built to grow with users.
@@ -35,6 +34,8 @@
         <a
           href="#projects"
           class="inline-block shadow-lg text-aqua bg-prussian-blue/80 hover:bg-prussian-blue px-5 py-3 rounded-lg font-semibold text-base sm:text-lg transition"
+          :data-aos-delay="500"
+          data-aos="zoom-in"
         >
           View My Work
         </a>
@@ -92,6 +93,7 @@
       href="https://drive.google.com/file/d/1nPVDXLM3t9847UomXOKCjqhOvmZdgJuu/view?usp=sharing"
       target="_blank"
       class="inline-block text-aqua hover:bg-prussian-blue hover:text-white font-semibold py-3 px-6 rounded-md transition duration-300"
+      data-aos="fade-up"
     >
       View My Resume
     </a>
@@ -107,7 +109,7 @@
     </p>
     <div class="flex space-x-3">
       <a
-        v-for="button in AccountsList"
+        v-for="(button, i) in AccountsList"
         :key="button.name"
         :href="button.url"
         target="_blank"
@@ -116,6 +118,8 @@
           'p-3 rounded-full flex items-center justify-center transition-colors duration-400 hover:bg-white hover:text-chinese-black',
         ]"
         :aria-label="button.name"
+        data-aos="fade-left"
+        :data-aos-delay="i * 100"
       >
         <Icon :icon="button.icon" width="24" height="24" />
       </a>
@@ -132,7 +136,7 @@ import { Icon } from '@iconify/vue'
 import { onMounted, ref } from 'vue'
 import TypeIt from 'typeit'
 
-import { TechnologiesList } from '@/stores/icons'
+import { FeaturedTechnologies, TechnologiesList } from '@/stores/icons'
 import { ProjectsList } from '@/stores/projects'
 import { AccountsList } from '@/stores/socials'
 

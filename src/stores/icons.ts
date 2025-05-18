@@ -30,3 +30,10 @@ export const TechnologiesList: Technology[] = Object.entries(TechIconsRegistry).
     icon,
   }),
 )
+
+export const FeaturedTechnologies: Technology[] = ['Laravel', 'Vue.js', 'Quasar Framework'].map(
+  (name) => ({
+    name,
+    icon: TechIconsRegistry[name],
+  }),
+)
