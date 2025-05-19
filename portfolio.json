@@ -53,12 +53,6 @@
       ]
     },
     {
-      "name": "HttpFlux",
-      "description": "Opinionated and reusable Maven-based Java HTTP client package supporting REST APIs and multipart uploads with automatic header injection.",
-      "url": null,
-      "tech": ["Java", "Maven"]
-    },
-    {
       "name": "Hitz App",
       "description": "Mobile-first ride-sharing application that utilizes Google Maps API for real-time location tracking and route optimization.",
       "url": null,
@@ -90,6 +84,12 @@
       "description": "A CLI tool to manage virtual hosts in your machine at ease.",
       "url": null,
       "tech": ["NodeJs", "NPM"]
+    },
+    {
+      "name": "HttpFlux",
+      "description": "Opinionated and reusable Maven-based Java HTTP client package supporting REST APIs and multipart uploads with automatic header injection.",
+      "url": null,
+      "tech": ["Java", "Maven"]
     },
     {
       "name": "ZK9500 Scanner",
