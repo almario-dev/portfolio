@@ -55,6 +55,6 @@ jobs:
         run: |
           sshpass -p "$SSH_PASSWORD" rsync -avz --delete \
           --exclude='.htaccess' \
-          --exclude='$EXCLUDE_DIR' \
+          --exclude="$EXCLUDE_DIR" \
           -e "ssh -p $SSH_PORT -o StrictHostKeyChecking=no" \
           dist/ $SSH_USER@$SSH_HOST:$SSH_TARGET_DIR
