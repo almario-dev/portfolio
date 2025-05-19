@@ -40,7 +40,7 @@
     },
     {
       "name": "Quick Checker App",
-      "description": "Smart test checker mobile application powered by AI. It utilizes OpenAI API for real-time automatic test checking and grading, providing instant feedback to users.",
+      "description": "An AI-powered test checker that grades using an answer key or applies AI reasoning to assess answers. It provides editable results, allowing users to review and adjust AI-generated scores for accuracy.",
       "url": null,
       "tech": [
         "Laravel",
