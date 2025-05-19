@@ -1,7 +1,7 @@
 <template>
   <IndexHeader />
 
-  <section class="relative md:h-screen">
+  <section class="relative md:h-screen overflow-hidden">
     <div
       class="md:absolute md:top-2/6 md:-translate-y-1/2 right-1/2 mt-8 md:mt-0 mx-auto md:right-16 w-[40vw] md:w-[28vw] aspect-square shadow-2xl shadow-prussian-blue bg-[url('@/assets/images/almario-no-bg.png')] bg-contain bg-no-repeat z-10 border-2 opacity-90 border-aqua/50 rounded-full"
       data-aos="fade-left"
@@ -24,7 +24,7 @@
         </div>
 
         <p
-          class="text-gray-400 max-w-full px-6 md:px-0 sm:max-w-4/5 text-lg sm:text-2xl mb-12 sm:mb-16 my-16"
+          class="text-gray-400 px-6 md:px-0 sm:max-w-4/5 text-lg sm:text-2xl mb-12 sm:mb-16 my-16"
           data-aos="zoom-in"
           :data-aos-delay="500"
         >
@@ -43,7 +43,7 @@
     </div>
   </section>
 
-  <section id="projects" class="bg-[#0B1116] py-20 px-8">
+  <section id="projects" class="bg-[#0B1116] py-20 px-8 overflow-hidden">
     <h2 class="text-3xl font-bold text-center mb-12">Projects</h2>
     <div class="grid md:grid-cols-3 gap-8">
       <Project
@@ -56,12 +56,12 @@
     </div>
   </section>
 
-  <section id="technologies" class="py-20 px-8 text-center">
+  <section id="technologies" class="py-20 px-8 text-center overflow-hidden">
     <h2 class="text-3xl font-bold mb-10">Tools & Technologies</h2>
     <Technologies :list="TechnologiesList" />
   </section>
 
-  <section id="about" class="py-20 px-8 text-center">
+  <section id="about" class="py-20 px-8 text-center overflow-hidden">
     <h2 class="text-3xl font-bold mb-6">
       <span>About Me</span>
     </h2>
@@ -99,7 +99,10 @@
     </a>
   </section>
 
-  <section id="contact" class="bg-[#0B1116] py-20 px-8 text-center flex flex-col items-center">
+  <section
+    id="contact"
+    class="bg-[#0B1116] py-20 px-8 text-center flex flex-col items-center overflow-hidden"
+  >
     <h2 class="text-3xl font-bold">Get in Touch</h2>
     <p class="text-gray-400 mt-8 mb-12">
       Let's work together — reach me at
