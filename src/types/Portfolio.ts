@@ -6,7 +6,7 @@ export interface Technology {
 export interface SocialAccount {
   name: string
   icon: string
-  link: string
+  url: string
 }
 
 export interface Project {

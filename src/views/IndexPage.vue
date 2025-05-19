@@ -119,7 +119,7 @@
       <a
         v-for="(button, i) in portfolio.AccountsList"
         :key="button.name"
-        :href="button.link"
+        :href="button.url"
         target="_blank"
         rel="noopener noreferrer"
         class="p-3 rounded-full flex items-center justify-center transition-colors duration-400 hover:bg-white hover:text-chinese-black"
