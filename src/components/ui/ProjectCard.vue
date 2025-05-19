@@ -23,9 +23,11 @@
 </template>
 
 <script setup lang="ts">
-import { TechIconsRegistry } from '@/stores/icons'
+import { usePortfolioStore } from '@/stores/portfolio'
 import { Icon } from '@iconify/vue'
 import { computed } from 'vue'
+
+const portfolio = usePortfolioStore()
 
 const props = withDefaults(
   defineProps<{
@@ -45,7 +47,7 @@ const props = withDefaults(
 const techStack = computed(() => {
   return props.tech
     ?.map((tech) => {
-      const icon = TechIconsRegistry[tech] || null
+      const icon = portfolio.TechIconsRegistry[tech] || null
 
       if (!icon) return null
 

@@ -13,7 +13,7 @@
 
         <div class="flex justify-center md:justify-start items-center gap-6 flex-wrap my-10">
           <span
-            v-for="(tech, i) in FeaturedTechnologies"
+            v-for="(tech, i) in portfolio.getFeaturedTechnologies"
             :key="i"
             data-aos="zoom-in"
             :data-aos-delay="1000 + i * 100"
@@ -23,22 +23,25 @@
           </span>
         </div>
 
-        <p
+        <div
           class="text-gray-400 px-6 md:px-0 sm:max-w-4/5 text-lg sm:text-2xl mb-12 sm:mb-16 my-16"
           data-aos="zoom-in"
           :data-aos-delay="500"
-        >
-          Turning ideas into sleek, scalable applications using Laravel, Vue, and Quasar — crafted
-          for real-world impact and built to grow with users.
-        </p>
+          v-html="portfolio.intro"
+        ></div>
         <a
           href="#projects"
           class="inline-block shadow-lg text-aqua bg-prussian-blue/80 hover:bg-prussian-blue px-5 py-3 rounded-lg font-semibold text-base sm:text-lg transition"
           :data-aos-delay="500"
           data-aos="zoom-in"
+          v-if="portfolio.ProjectsList.length && !portfolio.isFetching"
         >
           View My Work
         </a>
+
+        <p v-if="portfolio.isFetching" class="text-gray-400 animate-pulse font-medium">
+          Fetching data... please wait
+        </p>
       </div>
     </div>
   </section>
@@ -47,18 +50,32 @@
     <h2 class="text-3xl font-bold text-center mb-12">Projects</h2>
     <div class="grid md:grid-cols-3 gap-8">
       <Project
-        v-for="(project, i) in ProjectsList"
+        v-for="(project, i) in portfolio.ProjectsList"
         :key="i"
         v-bind="project"
-        :data-aos="i % 3 === 0 ? 'fade-right' : i % 3 === 1 ? 'fade-up' : 'fade-left'"
+        :data-aos="
+          isMobile
+            ? i % 2 === 0
+              ? 'fade-right'
+              : 'fade-left'
+            : i % 3 === 0
+              ? 'fade-right'
+              : i % 3 === 1
+                ? 'fade-up'
+                : 'fade-left'
+        "
         data-aos-anchor-placement="center-bottom"
       />
+    </div>
+
+    <div v-if="!portfolio.ProjectsList.length" class="text-gray-400 text-center">
+      No projects to display.
     </div>
   </section>
 
   <section id="technologies" class="py-20 px-8 text-center overflow-hidden">
     <h2 class="text-3xl font-bold mb-10">Tools & Technologies</h2>
-    <Technologies :list="TechnologiesList" />
+    <Technologies :list="portfolio.getTechnologies" />
   </section>
 
   <section id="about" class="py-20 px-8 text-center overflow-hidden">
@@ -74,23 +91,11 @@
         My name is <span class="text-gray-300 font-medium">Almario Miano</span>.
       </p>
 
-      <p class="max-w-xl mx-auto text-gray-400 mt-8 mb-12">
-        I've spent the past 3 years building full-stack applications with Laravel, Vue, and Quasar —
-        focusing on clean code, maintainability, and scalability.
-        <br />
-        <br />
-        <br />
-        Beyond coding, I lead architecture planning and manage CI/CD pipelines for smooth, reliable
-        deployments.
-        <br />
-        <br />
-        I'm passionate about creating user-friendly, efficient applications that solve real-world
-        problems.
-      </p>
+      <div class="max-w-xl mx-auto text-gray-400 mt-8 mb-12" v-html="portfolio.aboutMe"></div>
     </div>
 
     <a
-      href="https://drive.google.com/file/d/1nPVDXLM3t9847UomXOKCjqhOvmZdgJuu/view?usp=sharing"
+      :href="portfolio.resumeLink"
       target="_blank"
       class="inline-block text-aqua hover:bg-prussian-blue hover:text-white font-semibold py-3 px-6 rounded-md transition duration-300"
       data-aos="fade-up"
@@ -112,17 +117,16 @@
     </p>
     <div class="flex space-x-3">
       <a
-        v-for="(button, i) in AccountsList"
+        v-for="(button, i) in portfolio.AccountsList"
         :key="button.name"
-        :href="button.url"
+        :href="button.link"
         target="_blank"
         rel="noopener noreferrer"
-        :class="[
-          'p-3 rounded-full flex items-center justify-center transition-colors duration-400 hover:bg-white hover:text-chinese-black',
-        ]"
+        class="p-3 rounded-full flex items-center justify-center transition-colors duration-400 hover:bg-white hover:text-chinese-black"
         :aria-label="button.name"
         data-aos="fade-left"
         :data-aos-delay="i * 100"
+        :title="button.name"
       >
         <Icon :icon="button.icon" width="24" height="24" />
       </a>
@@ -136,35 +140,49 @@
 import { IndexHeader, IndexFooter, Technologies, Project } from '@/components'
 import { Profile } from '@/components/images'
 import { Icon } from '@iconify/vue'
-import { onMounted, ref } from 'vue'
+import { onBeforeMount, onMounted, onUnmounted, ref } from 'vue'
 import TypeIt from 'typeit'
 
-import { FeaturedTechnologies, TechnologiesList } from '@/stores/icons'
-import { ProjectsList } from '@/stores/projects'
-import { AccountsList } from '@/stores/socials'
+import { usePortfolioStore } from '@/stores/portfolio'
 
+const portfolio = usePortfolioStore()
 const greetingsRef = ref(null)
+const isMobile = ref(false)
+
+onBeforeMount(async () => {
+  await portfolio.fetchData()
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', checkMobile)
+})
 
 onMounted(() => {
-  if (!greetingsRef.value) return
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
 
-  new TypeIt(greetingsRef.value, {
-    speed: 150,
-    // startDelay: 1000,
-    waitUntilVisible: true,
-    loop: true,
-  })
-    .type(`Hi,`)
-    .pause(2000)
-    .type(` I am <span class="text-aqua">Almario</span>.`)
-    .pause(3000)
-    .delete(100)
-    .type(`I am <span class="text-aqua">Full Stack</span>`)
-    .move(-11, { delay: 100 })
-    .type(' a')
-    .move(null, { to: 'END', delay: 50 })
-    .type(`<span class="text-aqua"> Developer</span>.`)
-    .pause(30000)
-    .go()
+  if (greetingsRef.value) {
+    new TypeIt(greetingsRef.value, {
+      speed: 150,
+      waitUntilVisible: true,
+      loop: true,
+    })
+      .type(`Hi,`)
+      .pause(2000)
+      .type(` I am <span class="text-aqua">Almario</span>.`)
+      .pause(3000)
+      .delete(100)
+      .type(`I am <span class="text-aqua">Full Stack</span>`)
+      .move(-11, { delay: 100 })
+      .type(' a')
+      .move(null, { to: 'END', delay: 50 })
+      .type(`<span class="text-aqua"> Developer</span>.`)
+      .pause(30000)
+      .go()
+  }
 })
+
+function checkMobile() {
+  isMobile.value = window.innerWidth <= 768 // or use Tailwind’s md breakpoint (768px)
+}
 </script>
