@@ -3,6 +3,8 @@ name: Build & Deploy Vue SPA
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'portfolio.json'
 
 jobs:
   build:
