@@ -7,9 +7,9 @@
       </div>
     </div>
     <nav class="space-x-6 text-sm">
-      <a href="#projects" class="hover:text-blue-500 transition">Projects</a>
-      <a href="#about" class="hover:text-blue-500 transition">About</a>
-      <a href="#contact" class="hover:text-blue-500 transition">Contact</a>
+      <a href="#projects" class="hover:text-aqua transition">Projects</a>
+      <a href="#about" class="hover:text-aqua transition">About</a>
+      <a href="#contact" class="hover:text-aqua transition">Contact</a>
     </nav>
   </header>
 </template>
