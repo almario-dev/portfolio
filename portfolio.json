@@ -126,7 +126,7 @@
     }
   ],
   "featuredTechnologies": ["Laravel", "Vue.js", "Quasar Framework"],
-  "resumeLink": "https://drive.google.com/file/d/1fe43xDlY3Y1SkOYqAz-BXJXAW2x_fSW4/view?usp=sharing",
+  "resumeLink": "https://almario.dev/_/resume.pdf",
   "intro": "Turning ideas into sleek, scalable applications using Laravel, Vue, and Quasar — crafted for real-world impact and built to grow with users.",
   "aboutMe": "I've spent the past 3 years building full-stack applications with Laravel, Vue, and Quasar — focusing on clean code, maintainability, and scalability.<br /><br />Beyond coding, I lead architecture planning and manage CI/CD pipelines for smooth, reliable deployments.<br /><br />I'm passionate about creating user-friendly, efficient applications that solve real-world problems."
 }
